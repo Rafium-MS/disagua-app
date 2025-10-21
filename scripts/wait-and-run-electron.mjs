@@ -38,7 +38,8 @@ const electronProcess = spawn(
     env: {
       ...process.env,
       VITE_DEV_SERVER_URL: devServerUrl
-    }
+    },
+    shell: process.platform === 'win32'
   }
 )
 
