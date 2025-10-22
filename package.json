@@ -1,31 +1,29 @@
 {
   "name": "disagua-app",
-  "version": "0.1.0",
   "private": true,
-  "description": "Aplicativo Electron + React para gestão Diságua",
-  "main": "electron/main.js",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env VITE_DEV_SERVER_URL=http://localhost:5173 concurrently -k \"vite\" \"wait-on tcp:5173 && electron .\"",
-    "start": "electron .",
-    "build:renderer": "vite build",
-    "build": "npm run build:renderer && electron-builder",
-    "package": "electron-builder --dir",
-    "preview": "vite preview"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron": "cross-env BROWSER=none concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\""
   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.28.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.3",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "vite": "^5.4.10",
     "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
-    "electron": "^31.3.1",
-    "electron-builder": "^24.13.3",
-    "wait-on": "^7.2.0",
-    "vite": "^5.4.8"
+    "wait-on": "^8.0.2",
+    "electron": "^31.3.0"
   }
 }
-

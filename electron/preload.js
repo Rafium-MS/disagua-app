@@ -1,6 +1,1 @@
-import { contextBridge } from 'electron';
-
-contextBridge.exposeInMainWorld('api', {
-  ping: () => 'pong'
-});
-
+// placeholder - secure bridge later

@@ -1,42 +1,34 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import logo from '@/assets/logo.svg';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-const linkBase =
-  'px-3 py-2 rounded-md text-sm text-slate-700 hover:bg-slate-100';
-
-export default function Navbar() {
-  const navLink = ({ isActive }) =>
-    `${linkBase} ${isActive ? 'bg-slate-200 font-medium' : ''}`;
-
+function NavItem({ to, children }){
   return (
-    <header className="border-b bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-2 flex items-center gap-3">
-        <div className="flex items-center gap-2 mr-2">
-          <img src={logo} alt="Diságua" width="28" height="28" />
-          <span className="text-slate-800 font-semibold">Diságua</span>
-        </div>
-        <nav className="flex gap-1">
-          <NavLink to="/" className={navLink} end>
-            Início
-          </NavLink>
-          <NavLink to="/parceiros" className={navLink}>
-            Parceiros
-          </NavLink>
-          <NavLink to="/lojas" className={navLink}>
-            Lojas
-          </NavLink>
-          <NavLink to="/conectar" className={navLink}>
-            Conectar
-          </NavLink>
-          <NavLink to="/comprovantes" className={navLink}>
-            Comprovantes
-          </NavLink>
-          <NavLink to="/relatorios" className={navLink}>
-            Relatórios
-          </NavLink>
-        </nav>
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+          isActive ? "bg-white/10" : "hover:bg-white/10"
+        }`
+      }
+      end
+    >
+      {children}
+    </NavLink>
+  )
+}
+
+export default function Navbar(){
+  return (
+    <nav className="sticky top-0 z-30 bg-slate-900 text-white">
+      <div className="mx-auto max-w-7xl px-4 py-3 flex flex-wrap gap-2 items-center">
+        <span className="font-semibold tracking-wide mr-4">Disagua</span>
+        <NavItem to="/">Início</NavItem>
+        <NavItem to="/parceiros">Parceiros</NavItem>
+        <NavItem to="/lojas">Lojas</NavItem>
+        <NavItem to="/conectar">Conectar</NavItem>
+        <NavItem to="/comprovantes">Comprovantes</NavItem>
+        <NavItem to="/relatorios">Relatórios</NavItem>
       </div>
-    </header>
-  );
+    </nav>
+  )
 }

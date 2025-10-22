@@ -1,21 +1,27 @@
-import React from 'react';
-import Card from '../components/ui/Card.jsx';
-import Stat from '../components/ui/Stat.jsx';
+import React from 'react'
+import Card from '../components/ui/Card.jsx'
+import { Link } from 'react-router-dom'
 
-export default function HomePage() {
+export default function HomePage(){
+  const tip = "Dica: cadastre marcas e lojas primeiro, depois os parceiros, e por fim use a aba Conectar."
   return (
-    <div className="grid gap-4">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <Stat label="Parceiros ativos" value={18} />
-        <Stat label="Lojas conectadas" value={42} />
-        <Stat label="Comprovantes / dia" value={127} />
-      </div>
-      <Card title="Bem-vindo">
-        <p className="text-sm text-slate-700">
-          Use o menu acima para navegar entre os módulos do sistema.
-        </p>
+    <div className="grid gap-4 md:grid-cols-2">
+      <Card title="Bem-vindo à Disagua">
+        <p className="text-slate-700">SPA em React com persistência local (localStorage). {tip}</p>
+        <ul className="list-disc ml-5 mt-3 text-slate-700">
+          <li>Relatórios por período e por marca;</li>
+          <li>Wizard de importação de comprovantes (simulado);</li>
+          <li>Regra: um parceiro pode atender várias lojas; loja só pode estar com um parceiro ativo.</li>
+        </ul>
+      </Card>
+      <Card title="Atalhos">
+        <div className="flex flex-wrap gap-2">
+          <Link className="underline text-blue-700" to="/lojas">Cadastrar marcas e lojas</Link>
+          <Link className="underline text-blue-700" to="/parceiros">Cadastrar parceiros</Link>
+          <Link className="underline text-blue-700" to="/conectar">Conectar</Link>
+          <Link className="underline text-blue-700" to="/relatorios">Relatórios</Link>
+        </div>
       </Card>
     </div>
-  );
+  )
 }
-
