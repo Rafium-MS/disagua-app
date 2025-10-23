@@ -151,6 +151,7 @@ model Receipt {
   filename        String
   fileExt         String?
   sizeBytes       Int?
+  publicUrl       String?
   quantidade      Decimal?
   dataComprovante DateTime?
   assinaturaOk    Boolean?      @default(false)

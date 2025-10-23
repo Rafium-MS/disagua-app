@@ -10,24 +10,31 @@ export class DashboardService {
       where: { orgId_y_m: { orgId, y, m } }
     });
 
-    const receiptsByStatus = await this.prisma.receipt.groupBy({
+    const receiptsGrouped = await this.prisma.receipt.groupBy({
       by: ['status'],
       where: { orgId, periodId: period?.id || undefined },
       _count: { _all: true }
     });
 
-    const entriesByBrand = await this.prisma.reportEntry.groupBy({
+    const receiptsByStatus = ['pendente', 'valido', 'invalido'].map((status) => {
+      const match = receiptsGrouped.find((item) => item.status === status);
+      return { status, count: match?._count._all ?? 0 };
+    });
+
+    const entriesByBrandRaw = await this.prisma.reportEntry.groupBy({
       by: ['brandId'],
       where: { orgId, periodId: period?.id || undefined },
       _sum: { total: true }
     });
 
     const brands = await this.prisma.brand.findMany({ where: { orgId } });
-    const entriesByBrandNamed = entriesByBrand.map((e: typeof entriesByBrand[number]) => ({
-      brandId: e.brandId,
-      brand: (brands.find((b: typeof brands[number]) => b.id === e.brandId)?.name) || e.brandId,
-      total: String(e._sum.total || 0)
-    }));
+    const entriesByBrand = entriesByBrandRaw
+      .map((entry) => ({
+        brandId: entry.brandId,
+        brand: brands.find((b) => b.id === entry.brandId)?.name || entry.brandId,
+        total: Number(entry._sum.total || 0),
+      }))
+      .sort((a, b) => b.total - a.total);
 
     const partnersWithReceipts = await this.prisma.receipt.findMany({
       where: { orgId, periodId: period?.id || undefined, status: 'valido' },
@@ -35,22 +42,45 @@ export class DashboardService {
       distinct: ['partnerId']
     });
 
-    const totalPartners = await this.prisma.partner.count({ where: { orgId } });
-    const sent = partnersWithReceipts.filter((p: typeof partnersWithReceipts[number]) => !!p.partnerId).length;
-    const coverage = { partnersTotal: totalPartners, partnersSent: sent, partnersPending: totalPartners - sent };
+    const partners = await this.prisma.partner.findMany({
+      where: { orgId },
+      select: { id: true, parceiro: true }
+    });
 
-    const byUF = await this.prisma.reportEntry.findMany({
+    const sentIds = new Set(partnersWithReceipts.map((p) => p.partnerId).filter(Boolean) as string[]);
+    const pendingPartners = partners
+      .filter((partner) => !sentIds.has(partner.id))
+      .map((partner) => ({ id: partner.id, name: partner.parceiro }));
+
+    const coverage = {
+      partnersTotal: partners.length,
+      partnersSent: partners.length - pendingPartners.length,
+      partnersPending: pendingPartners.length,
+      pendingPartners,
+    };
+
+    const entriesByStore = await this.prisma.reportEntry.findMany({
       where: { orgId, periodId: period?.id || undefined },
       include: { store: true }
     });
 
     const ufAgg: Record<string, number> = {};
-    byUF.forEach((entry: typeof byUF[number]) => {
+    entriesByStore.forEach((entry) => {
       const uf = entry.store?.uf || 'NA';
-      ufAgg[uf] = (ufAgg[uf] || 0) + Number(entry.total || 0);
+      const total = Number(entry.total || 0);
+      ufAgg[uf] = (ufAgg[uf] || 0) + total;
     });
 
-    const entriesByUF = Object.entries(ufAgg).map(([uf, total]) => ({ uf, total: String(total) }));
-    return { period: { y, m, periodId: period?.id || null }, receiptsByStatus, entriesByBrand: entriesByBrandNamed, entriesByUF, coverage };
+    const entriesByUF = Object.entries(ufAgg)
+      .map(([uf, total]) => ({ uf, total: Number(total) }))
+      .sort((a, b) => b.total - a.total);
+
+    return {
+      period: { y, m, periodId: period?.id || null },
+      receiptsByStatus,
+      entriesByBrand,
+      entriesByUF,
+      coverage,
+    };
   }
 }

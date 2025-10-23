@@ -6,6 +6,7 @@ import { listBrands } from '../services/brands.js';
 import { listStores } from '../services/stores.js';
 import { listPartners } from '../services/partners.js';
 import { createReceipt, listReceipts, updateReceipt } from '../services/receipts.js';
+import { presignUpload, uploadToPresignedUrl } from '../services/uploads.js';
 
 function formatBytes(bytes){
   if(!bytes && bytes !== 0) return '—';
@@ -90,21 +91,42 @@ export default function ComprovantesPage(){
     if(files.length === 0) return;
     setLoadingImport(true);
     setError('');
+    const now = new Date();
+    const defaultYear = String(now.getUTCFullYear());
+    const defaultMonth = String(now.getUTCMonth() + 1);
+    let success = 0;
     try {
-      await Promise.all(files.map((file, index) => {
-        const ext = file.name.split('.').pop();
-        return createReceipt({
+      for(const file of files){
+        const store = stores.find((s) => s.id === selectedStore);
+        const contentType = file.type || 'application/octet-stream';
+        const { url, key, publicUrl } = await presignUpload({
+          filename: file.name,
+          contentType,
+          partnerId: selectedPartner || undefined,
+          storeId: selectedStore || undefined,
+          uf: store?.uf,
+          municipio: store?.municipio,
+          y: defaultYear,
+          m: defaultMonth,
+        });
+
+        await uploadToPresignedUrl({ url, file, contentType });
+
+        const ext = file.name.includes('.') ? file.name.split('.').pop() : '';
+        await createReceipt({
           brandId: selectedBrand || undefined,
           storeId: selectedStore || undefined,
           partnerId: selectedPartner || undefined,
           filename: file.name,
-          objectKey: `manual/${Date.now()}-${index}-${file.name}`,
+          objectKey: key,
+          publicUrl,
           fileExt: ext,
           sizeBytes: file.size,
           status: 'pendente',
         });
-      }));
-      setImportedCount(files.length);
+        success += 1;
+      }
+      setImportedCount(success);
       setFiles([]);
       setStep(4);
       await loadReceipts();
