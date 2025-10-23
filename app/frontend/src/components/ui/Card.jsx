@@ -1,5 +1,4 @@
 import React from 'react'
-
 export default function Card({ title, actions, children }){
   return (
     <div className="bg-white shadow-sm rounded-2xl border border-slate-200">

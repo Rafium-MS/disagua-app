@@ -9,16 +9,14 @@ import ComprovantesPage from './pages/ComprovantesPage.jsx'
 import RelatoriosPage from './pages/RelatoriosPage.jsx'
 
 export default function App(){
-  return (
-    <Shell>
-      <Routes>
-        <Route path="/" element={<HomePage/>} />
-        <Route path="/parceiros" element={<ParceirosPage/>} />
-        <Route path="/lojas" element={<LojasPage/>} />
-        <Route path="/conectar" element={<ConectarPage/>} />
-        <Route path="/comprovantes" element={<ComprovantesPage/>} />
-        <Route path="/relatorios" element={<RelatoriosPage/>} />
-      </Routes>
-    </Shell>
-  )
+  return (<Shell>
+    <Routes>
+      <Route path="/" element={<HomePage/>} />
+      <Route path="/parceiros" element={<ParceirosPage/>} />
+      <Route path="/lojas" element={<LojasPage/>} />
+      <Route path="/conectar" element={<ConectarPage/>} />
+      <Route path="/comprovantes" element={<ComprovantesPage/>} />
+      <Route path="/relatorios" element={<RelatoriosPage/>} />
+    </Routes>
+  </Shell>)
 }
