@@ -4,8 +4,8 @@ export declare class AuthController {
     private auth;
     constructor(auth: AuthService);
     login(dto: LoginDto): Promise<{
-        access: any;
-        refresh: any;
+        access: string;
+        refresh: string;
         user: {
             id: string;
             email: string;

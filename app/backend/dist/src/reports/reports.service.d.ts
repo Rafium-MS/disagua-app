@@ -12,26 +12,26 @@ export declare class ReportsService {
         totals: any;
         count: number;
         entries: ({
-            brand: {
-                id: string;
-                orgId: string;
-                name: string;
-                codDisagua: string | null;
-            };
             store: {
                 id: string;
                 orgId: string;
                 name: string;
+                uf: string;
+                municipio: string;
                 brandId: string;
+                localEntrega: string | null;
+                endereco: string | null;
                 valor20l: import("@prisma/client/runtime/library").Decimal;
                 valor10l: import("@prisma/client/runtime/library").Decimal;
                 valor1500ml: import("@prisma/client/runtime/library").Decimal;
                 valorCxCopo: import("@prisma/client/runtime/library").Decimal;
                 valorVasilhame: import("@prisma/client/runtime/library").Decimal;
-                uf: string;
-                localEntrega: string | null;
-                endereco: string | null;
-                municipio: string;
+            };
+            brand: {
+                id: string;
+                orgId: string;
+                name: string;
+                codDisagua: string | null;
             };
             period: {
                 id: string;
@@ -42,15 +42,15 @@ export declare class ReportsService {
         } & {
             id: string;
             orgId: string;
-            storeId: string;
-            brandId: string;
-            periodId: string;
             data: Date;
+            brandId: string;
             valor20l: import("@prisma/client/runtime/library").Decimal;
             valor10l: import("@prisma/client/runtime/library").Decimal;
             valor1500ml: import("@prisma/client/runtime/library").Decimal;
             valorCxCopo: import("@prisma/client/runtime/library").Decimal;
             valorVasilhame: import("@prisma/client/runtime/library").Decimal;
+            storeId: string;
+            periodId: string;
             total: import("@prisma/client/runtime/library").Decimal;
         })[];
     }>;
