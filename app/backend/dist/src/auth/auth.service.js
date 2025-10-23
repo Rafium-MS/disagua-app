@@ -22,9 +22,7 @@ let AuthService = class AuthService {
         this.config = config;
     }
     async validateUser(orgId, email, password) {
-        const user = await this.prisma.user.findUnique({
-            where: { email_orgId: { email, orgId } },
-        });
+        const user = await this.prisma.user.findUnique({ where: { email_orgId: { email, orgId } } });
         if (!user || !user.isActive)
             throw new common_1.UnauthorizedException('Invalid credentials');
         const ok = await bcrypt.compare(password, user.passwordHash);
@@ -35,22 +33,14 @@ let AuthService = class AuthService {
     async login(orgId, email, password) {
         const user = await this.validateUser(orgId, email, password);
         const payload = { sub: user.id, orgId: user.orgId, role: user.role };
-        const access = await this.jwt.signAsync(payload, {
-            secret: this.config.get('JWT_SECRET'),
-            expiresIn: this.config.get('JWT_EXPIRES_IN') || '15m',
-        });
-        const refresh = await this.jwt.signAsync(payload, {
-            secret: this.config.get('JWT_REFRESH_SECRET'),
-            expiresIn: this.config.get('JWT_REFRESH_EXPIRES_IN') || '7d',
-        });
+        const access = await this.jwt.signAsync(payload, { secret: this.config.get('JWT_SECRET'), expiresIn: this.config.get('JWT_EXPIRES_IN') || '15m' });
+        const refresh = await this.jwt.signAsync(payload, { secret: this.config.get('JWT_REFRESH_SECRET'), expiresIn: this.config.get('JWT_REFRESH_EXPIRES_IN') || '7d' });
         return { access, refresh, user: { id: user.id, email: user.email, role: user.role, orgId: user.orgId } };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        jwt_1.JwtService,
-        config_1.ConfigService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService, jwt_1.JwtService, config_1.ConfigService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

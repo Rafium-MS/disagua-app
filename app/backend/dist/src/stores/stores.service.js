@@ -19,19 +19,11 @@ let StoresService = class StoresService {
     list(orgId, query) {
         const { uf, municipio, brand } = query;
         return this.prisma.store.findMany({
-            where: {
-                orgId,
-                uf: uf || undefined,
-                municipio: municipio || undefined,
-                brandId: brand || undefined
-            },
-            include: { brand: true },
-            orderBy: [{ municipio: 'asc' }, { name: 'asc' }]
+            where: { orgId, uf: uf || undefined, municipio: municipio || undefined, brandId: brand || undefined },
+            include: { brand: true }, orderBy: [{ municipio: 'asc' }, { name: 'asc' }]
         });
     }
-    create(orgId, data) {
-        return this.prisma.store.create({ data: { ...data, orgId } });
-    }
+    create(orgId, data) { return this.prisma.store.create({ data: { ...data, orgId } }); }
 };
 exports.StoresService = StoresService;
 exports.StoresService = StoresService = __decorate([

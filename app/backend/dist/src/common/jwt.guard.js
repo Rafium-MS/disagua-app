@@ -25,9 +25,7 @@ let JwtGuard = class JwtGuard {
         if (!token)
             throw new common_1.UnauthorizedException('Missing token');
         try {
-            const payload = await this.jwt.verifyAsync(token, {
-                secret: this.config.get('JWT_SECRET'),
-            });
+            const payload = await this.jwt.verifyAsync(token, { secret: this.config.get('JWT_SECRET') });
             req.user = payload;
             req.orgId = payload.orgId;
             return true;

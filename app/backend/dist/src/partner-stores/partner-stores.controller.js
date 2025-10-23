@@ -20,15 +20,11 @@ let PartnerStoresController = class PartnerStoresController {
     constructor(service) {
         this.service = service;
     }
-    list(req, query) {
-        return this.service.list(req.user.orgId, query);
-    }
+    list(req, query) { return this.service.list(req.user.orgId, query); }
     connect(req, partnerId, storeId) {
         return this.service.connect(req.user.orgId, partnerId, storeId);
     }
-    disconnect(req, id) {
-        return this.service.disconnect(req.user.orgId, id);
-    }
+    disconnect(req, id) { return this.service.disconnect(req.user.orgId, id); }
 };
 exports.PartnerStoresController = PartnerStoresController;
 __decorate([

@@ -18,9 +18,7 @@ let PartnerStoresService = class PartnerStoresService {
     }
     async connect(orgId, partnerId, storeId) {
         try {
-            return await this.prisma.partnerStore.create({
-                data: { orgId, partnerId, storeId }
-            });
+            return await this.prisma.partnerStore.create({ data: { orgId, partnerId, storeId } });
         }
         catch (e) {
             if (e.code === 'P2002')
@@ -31,16 +29,11 @@ let PartnerStoresService = class PartnerStoresService {
     list(orgId, query) {
         const { estado, cidade } = query;
         return this.prisma.partnerStore.findMany({
-            where: {
-                orgId,
-                partner: { estado: estado || undefined, cidade: cidade || undefined }
-            },
+            where: { orgId, partner: { estado: estado || undefined, cidade: cidade || undefined } },
             include: { partner: true, store: { include: { brand: true } } }
         });
     }
-    disconnect(orgId, id) {
-        return this.prisma.partnerStore.delete({ where: { id } });
-    }
+    disconnect(orgId, id) { return this.prisma.partnerStore.delete({ where: { id } }); }
 };
 exports.PartnerStoresService = PartnerStoresService;
 exports.PartnerStoresService = PartnerStoresService = __decorate([

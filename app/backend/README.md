@@ -10,7 +10,7 @@
    ```bash
    npm i
    ```
-4. Migrate + Generate + Seed:
+4. Prisma:
    ```bash
    npx prisma generate
    npx prisma migrate dev --name init
@@ -35,13 +35,18 @@
 - `POST /reports/periods` `GET /reports`
 - `POST /receipts` `GET /receipts` `PATCH /receipts/:id`
 
+#### Uploads (S3/MinIO)
+- `POST /uploads/presign` → body: `{ filename, contentType, uf?, municipio?, partnerId?, storeId?, y?, m? }`  
+  Responde `{ url, key, publicUrl }`. Faça **PUT** do arquivo direto para `url` com `Content-Type` correto.
+
+#### Dashboard
+- `GET /dashboard?y=YYYY&m=MM` → agrega: `receiptsByStatus`, `entriesByBrand`, `entriesByUF`, `coverage`.
+
 ### Multi-tenant e RLS
-- Todas as entidades têm `orgId`.
-- O guard JWT injeta `req.user.orgId`. Configure `app.current_org` via middleware ou em cada request quando usar **SQL cru**.
-- Script base em `sql/rls_policies.sql`.
+- Todas as entidades possuem `orgId`.
+- Configure políticas de RLS conforme `sql/rls_policies.sql` (opcional).
 
 ### Próximos passos
-- Presigned upload para MinIO/S3 (service `files`).
-- Guards por role (RBAC).
-- Fechamento de período com `closedAt` e somatórios automáticos.
-- OCR/validação assíncrona (BullMQ + Redis).
+- RBAC por rota (admin/operador/auditor) com decorators.
+- Fechamento de período (`closedAt`) + validações para emissão de NF.
+- OCR/thumbnail dos comprovantes (BullMQ + Redis).

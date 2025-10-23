@@ -20,15 +20,9 @@ let ReceiptsController = class ReceiptsController {
     constructor(service) {
         this.service = service;
     }
-    create(req, body) {
-        return this.service.create(req.user.orgId, body);
-    }
-    list(req, query) {
-        return this.service.list(req.user.orgId, query);
-    }
-    update(req, id, body) {
-        return this.service.update(req.user.orgId, id, body);
-    }
+    create(req, body) { return this.service.create(req.user.orgId, body); }
+    list(req, query) { return this.service.list(req.user.orgId, query); }
+    update(req, id, body) { return this.service.update(req.user.orgId, id, body); }
 };
 exports.ReceiptsController = ReceiptsController;
 __decorate([

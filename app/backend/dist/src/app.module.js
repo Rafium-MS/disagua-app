@@ -17,6 +17,8 @@ const partners_module_1 = require("./partners/partners.module");
 const partner_stores_module_1 = require("./partner-stores/partner-stores.module");
 const reports_module_1 = require("./reports/reports.module");
 const receipts_module_1 = require("./receipts/receipts.module");
+const files_module_1 = require("./files/files.module");
+const dashboard_module_1 = require("./dashboard/dashboard.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +33,9 @@ exports.AppModule = AppModule = __decorate([
             partners_module_1.PartnersModule,
             partner_stores_module_1.PartnerStoresModule,
             reports_module_1.ReportsModule,
-            receipts_module_1.ReceiptsModule
+            receipts_module_1.ReceiptsModule,
+            files_module_1.FilesModule,
+            dashboard_module_1.DashboardModule
         ],
     })
 ], AppModule);

@@ -21,12 +21,8 @@ let PartnersController = class PartnersController {
     constructor(service) {
         this.service = service;
     }
-    list(req, query) {
-        return this.service.list(req.user.orgId, query);
-    }
-    create(req, dto) {
-        return this.service.create(req.user.orgId, dto);
-    }
+    list(req, query) { return this.service.list(req.user.orgId, query); }
+    create(req, dto) { return this.service.create(req.user.orgId, dto); }
 };
 exports.PartnersController = PartnersController;
 __decorate([

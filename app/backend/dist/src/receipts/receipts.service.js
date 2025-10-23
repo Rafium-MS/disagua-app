@@ -16,26 +16,14 @@ let ReceiptsService = class ReceiptsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(orgId, data) {
-        return this.prisma.receipt.create({ data: { ...data, orgId } });
-    }
+    create(orgId, data) { return this.prisma.receipt.create({ data: { ...data, orgId } }); }
     list(orgId, query) {
         const { status, period, brand, store, partner } = query;
-        return this.prisma.receipt.findMany({
-            where: {
-                orgId,
-                status: status || undefined,
-                periodId: period || undefined,
-                brandId: brand || undefined,
-                storeId: store || undefined,
-                partnerId: partner || undefined
-            },
-            orderBy: { uploadedAt: 'desc' }
-        });
+        return this.prisma.receipt.findMany({ where: {
+                orgId, status: status || undefined, periodId: period || undefined, brandId: brand || undefined, storeId: store || undefined, partnerId: partner || undefined
+            }, orderBy: { uploadedAt: 'desc' } });
     }
-    update(orgId, id, data) {
-        return this.prisma.receipt.update({ where: { id }, data });
-    }
+    update(orgId, id, data) { return self.prisma.receipt.update({ where: { id }, data }); }
 };
 exports.ReceiptsService = ReceiptsService;
 exports.ReceiptsService = ReceiptsService = __decorate([

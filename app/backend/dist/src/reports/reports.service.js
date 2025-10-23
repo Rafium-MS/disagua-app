@@ -17,29 +17,15 @@ let ReportsService = class ReportsService {
         this.prisma = prisma;
     }
     createPeriod(orgId, y, m) {
-        return this.prisma.reportPeriod.upsert({
-            where: { orgId_y_m: { orgId, y, m } },
-            create: { orgId, y, m },
-            update: {}
-        });
+        return this.prisma.reportPeriod.upsert({ where: { orgId_y_m: { orgId, y, m } }, create: { orgId, y, m }, update: {} });
     }
     async list(orgId, query) {
         const { start, end, brand } = query;
         const entries = await this.prisma.reportEntry.findMany({
-            where: {
-                orgId,
-                brandId: brand || undefined,
-                data: {
-                    gte: start ? new Date(start) : undefined,
-                    lte: end ? new Date(end) : undefined
-                }
-            },
+            where: { orgId, brandId: brand || undefined, data: { gte: start ? new Date(start) : undefined, lte: end ? new Date(end) : undefined } },
             include: { brand: true, store: true, period: true }
         });
-        const totals = entries.reduce((acc, e) => {
-            acc.total = (acc.total || 0) + Number(e.total || 0);
-            return acc;
-        }, {});
+        const totals = entries.reduce((acc, e) => { acc.total = (acc.total || 0) + Number(e.total || 0); return acc; }, {});
         return { totals, count: entries.length, entries };
     }
 };

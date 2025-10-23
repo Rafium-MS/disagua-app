@@ -1,11 +1,5 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
 
 model Org {
   id        String   @id @default(uuid())
@@ -29,15 +23,10 @@ model User {
   role         Role
   isActive     Boolean @default(true)
   org          Org     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-
-  @@unique([orgId, email])
+  @@unique([orgId, email], name: "email_orgId")
 }
 
-enum Role {
-  admin
-  operador
-  auditor
-}
+enum Role { admin operador auditor }
 
 model Brand {
   id        String   @id @default(uuid())
@@ -48,7 +37,6 @@ model Brand {
   stores    Store[]
   receipts  Receipt[]
   reports   ReportEntry[]
-
   @@unique([orgId, name])
 }
 
@@ -71,7 +59,6 @@ model Store {
   partnerStore PartnerStore?
   receipts  Receipt[]
   reportEntries ReportEntry[]
-
   @@unique([orgId, brandId, name])
 }
 
@@ -99,8 +86,7 @@ model PartnerStore {
   org      Org     @relation(fields: [orgId], references: [id], onDelete: Cascade)
   partner  Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
   store    Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  @@unique([orgId, storeId]) // one partner per store
+  @@unique([orgId, storeId])
   @@unique([orgId, partnerId, storeId])
 }
 
@@ -111,8 +97,7 @@ model ReportPeriod {
   m     Int
   org   Org    @relation(fields: [orgId], references: [id], onDelete: Cascade)
   entries ReportEntry[]
-
-  @@unique([orgId, y, m])
+  @@unique([orgId, y, m], name: "orgId_y_m")
 }
 
 model ReportEntry {
@@ -132,8 +117,6 @@ model ReportEntry {
   period   ReportPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
   brand    Brand        @relation(fields: [brandId], references: [id], onDelete: Restrict)
   store    Store        @relation(fields: [storeId], references: [id], onDelete: Restrict)
-
-  @@default(map: "report_entry_total_generated") // just a label; compute in service
 }
 
 model Receipt {
@@ -153,7 +136,6 @@ model Receipt {
   dataComprovante DateTime?
   assinaturaOk  Boolean? @default(false)
   status        ReceiptStatus @default(pendente)
-
   org     Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
   partner Partner? @relation(fields: [partnerId], references: [id], onDelete: SetNull)
   store   Store?   @relation(fields: [storeId], references: [id], onDelete: SetNull)
@@ -162,11 +144,7 @@ model Receipt {
   uploadedBy User?  @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 }
 
-enum ReceiptStatus {
-  pendente
-  valido
-  invalido
-}
+enum ReceiptStatus { pendente valido invalido }
 
 model AuditLog {
   id       BigInt  @id @default(autoincrement())

@@ -1,5 +1,4 @@
 import { IsOptional, IsString } from 'class-validator';
-
 export class CreatePartnerDto {
   @IsString() parceiro: string;
   @IsString() cidade: string;

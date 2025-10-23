@@ -16,12 +16,8 @@ let BrandsService = class BrandsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    list(orgId) {
-        return this.prisma.brand.findMany({ where: { orgId }, orderBy: { name: 'asc' } });
-    }
-    create(orgId, data) {
-        return this.prisma.brand.create({ data: { ...data, orgId } });
-    }
+    list(orgId) { return this.prisma.brand.findMany({ where: { orgId }, orderBy: { name: 'asc' } }); }
+    create(orgId, data) { return this.prisma.brand.create({ data: { ...data, orgId } }); }
 };
 exports.BrandsService = BrandsService;
 exports.BrandsService = BrandsService = __decorate([

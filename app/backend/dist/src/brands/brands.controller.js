@@ -21,12 +21,8 @@ let BrandsController = class BrandsController {
     constructor(service) {
         this.service = service;
     }
-    list(req) {
-        return this.service.list(req.user.orgId);
-    }
-    create(req, dto) {
-        return this.service.create(req.user.orgId, dto);
-    }
+    list(req) { return this.service.list(req.user.orgId); }
+    create(req, dto) { return this.service.create(req.user.orgId, dto); }
 };
 exports.BrandsController = BrandsController;
 __decorate([

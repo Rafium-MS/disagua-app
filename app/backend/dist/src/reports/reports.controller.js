@@ -20,12 +20,8 @@ let ReportsController = class ReportsController {
     constructor(service) {
         this.service = service;
     }
-    createPeriod(req, dto) {
-        return this.service.createPeriod(req.user.orgId, dto.y, dto.m);
-    }
-    list(req, query) {
-        return this.service.list(req.user.orgId, query);
-    }
+    createPeriod(req, dto) { return this.service.createPeriod(req.user.orgId, dto.y, dto.m); }
+    list(req, query) { return this.service.list(req.user.orgId, query); }
 };
 exports.ReportsController = ReportsController;
 __decorate([

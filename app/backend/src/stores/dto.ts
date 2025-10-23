@@ -1,5 +1,4 @@
-import { IsDecimal, IsOptional, IsString } from 'class-validator';
-
+import { IsOptional, IsString } from 'class-validator';
 export class CreateStoreDto {
   @IsString() brandId: string;
   @IsString() name: string;

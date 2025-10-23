@@ -18,18 +18,10 @@ let PartnersService = class PartnersService {
     }
     list(orgId, query) {
         const { estado, cidade } = query;
-        return this.prisma.partner.findMany({
-            where: {
-                orgId,
-                estado: estado || undefined,
-                cidade: cidade || undefined,
-            },
-            orderBy: [{ estado: 'asc' }, { cidade: 'asc' }, { parceiro: 'asc' }]
-        });
+        return this.prisma.partner.findMany({ where: { orgId, estado: estado || undefined, cidade: cidade || undefined },
+            orderBy: [{ estado: 'asc' }, { cidade: 'asc' }, { parceiro: 'asc' }] });
     }
-    create(orgId, data) {
-        return this.prisma.partner.create({ data: { ...data, orgId } });
-    }
+    create(orgId, data) { return this.prisma.partner.create({ data: { ...data, orgId } }); }
 };
 exports.PartnersService = PartnersService;
 exports.PartnersService = PartnersService = __decorate([
