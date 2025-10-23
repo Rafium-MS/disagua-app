@@ -8,14 +8,16 @@ import './styles/base.css'
 import './styles/layout.css'
 import { loadFromIndexedDBToLocalStorage, syncLocalStorageToIndexedDB } from './utils/indexeddbSync.js'
 
-// Bootstrap IndexedDB sync
-await loadFromIndexedDBToLocalStorage();
-await syncLocalStorageToIndexedDB();
+async function bootstrap(){
+  await loadFromIndexedDBToLocalStorage()
+  await syncLocalStorageToIndexedDB()
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>,
+  )
+}
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-)
+bootstrap()
