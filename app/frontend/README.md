@@ -6,9 +6,10 @@ Aplicativo desktop com Electron + React.
 - Node.js 18+
 
 ## Scripts
-- `npm run dev` — inicia Vite no `:5173` e o Electron apontando para o dev server.
-- `npm run build` — gera `dist/` (renderer) e empacota com `electron-builder`.
-- `npm start` — inicia apenas o Electron com o conteúdo já empacotado.
+- `npm run dev` — inicia o Vite em `:5173` e o Electron apontando para o dev server de desenvolvimento.
+- `npm run build` — gera apenas o bundle do Vite em `dist/` (não empacota o app Electron).
+- `npm run preview` — roda um servidor local para inspecionar o bundle gerado pelo Vite.
+- `npm run electron` — inicia o Electron apontando para o dev server local (útil para desenvolvimento).
 
 ## Estrutura
 - `electron/` — processo principal do Electron e preload.
