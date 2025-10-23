@@ -23,7 +23,7 @@ let ReceiptsService = class ReceiptsService {
                 orgId, status: status || undefined, periodId: period || undefined, brandId: brand || undefined, storeId: store || undefined, partnerId: partner || undefined
             }, orderBy: { uploadedAt: 'desc' } });
     }
-    update(orgId, id, data) { return self.prisma.receipt.update({ where: { id }, data }); }
+    update(orgId, id, data) { return this.prisma.receipt.update({ where: { id }, data }); }
 };
 exports.ReceiptsService = ReceiptsService;
 exports.ReceiptsService = ReceiptsService = __decorate([
