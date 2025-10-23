@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "nest start",
+    "prestart": "npm run prisma:generate",
     "start:dev": "nest start --watch",
+    "prestart:dev": "npm run prisma:generate",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "prisma:generate": "prisma generate",
