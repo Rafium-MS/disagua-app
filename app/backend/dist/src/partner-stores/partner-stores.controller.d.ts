@@ -26,35 +26,35 @@ export declare class PartnerStoresController {
             orgId: string;
             name: string;
             brandId: string;
+            localEntrega: string | null;
+            endereco: string | null;
+            municipio: string;
+            uf: string;
             valor20l: import("@prisma/client/runtime/library").Decimal;
             valor10l: import("@prisma/client/runtime/library").Decimal;
             valor1500ml: import("@prisma/client/runtime/library").Decimal;
             valorCxCopo: import("@prisma/client/runtime/library").Decimal;
             valorVasilhame: import("@prisma/client/runtime/library").Decimal;
-            uf: string;
-            localEntrega: string | null;
-            endereco: string | null;
-            municipio: string;
         };
     } & {
         id: string;
+        connectedAt: Date;
         orgId: string;
         partnerId: string;
         storeId: string;
-        connectedAt: Date;
     })[]>;
     connect(req: any, partnerId: string, storeId: string): Promise<{
         id: string;
+        connectedAt: Date;
         orgId: string;
         partnerId: string;
         storeId: string;
-        connectedAt: Date;
     }>;
     disconnect(req: any, id: string): import(".prisma/client").Prisma.Prisma__PartnerStoreClient<{
         id: string;
+        connectedAt: Date;
         orgId: string;
         partnerId: string;
         storeId: string;
-        connectedAt: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }
