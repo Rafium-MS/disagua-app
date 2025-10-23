@@ -12,7 +12,15 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
   private readonly maxRetries = (() => {
     const raw = Number(process.env.PRISMA_CONNECTION_RETRIES ?? 5);
-    return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 5;
+    if (!Number.isFinite(raw)) {
+      return 5;
+    }
+
+    if (raw <= 0) {
+      return null;
+    }
+
+    return Math.floor(raw);
   })();
 
   private readonly retryDelayMs = (() => {
@@ -28,7 +36,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     try {
       await this.$connect();
     } catch (error) {
-      if (attempt >= this.maxRetries) {
+      const reachedMaxRetries =
+        this.maxRetries !== null && attempt >= this.maxRetries;
+
+      if (reachedMaxRetries) {
         this.logger.error(
           `Failed to connect to the database after ${attempt} attempt(s).`,
           error instanceof Error ? error.stack : String(error),
@@ -38,7 +49,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
       const reason = error instanceof Error ? error.message : String(error);
       this.logger.warn(
-        `Database connection failed (attempt ${attempt}/${this.maxRetries}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`,
+        `Database connection failed (attempt ${attempt}/${this.maxRetries ?? '∞'}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`,
       );
 
       await new Promise((resolve) => setTimeout(resolve, this.retryDelayMs));
