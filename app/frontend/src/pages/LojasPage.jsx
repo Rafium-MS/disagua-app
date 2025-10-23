@@ -22,7 +22,7 @@ export default function LojasPage(){
   function delStore(id){ if(!confirm('Excluir loja?'))return; setStores(a=>a.filter(s=>s.id!==id)) }
 
   return (<div className="grid gap-4">
-    <Card title="Cadastro de Marcas">
+    <Card title="Cadastro de Marcas" actions={<a href="/lojas/gerenciar" className="bg-slate-800 hover:bg-slate-900 text-white px-3 py-2 rounded-lg text-sm">Gerenciar Lojas</a>}>
       <form onSubmit={addBrand} className="grid md:grid-cols-3 gap-3">
         <Input label="Nome da Marca" value={brandForm.marca} onChange={e=>setBrandForm({...brandForm, marca:e.target.value})} required />
         <Input label="Cód. Matriz" value={brandForm.cod_disagua}onChange={e=>setBrandForm({...brandForm, cod_disagua:e.target.value})} />        
