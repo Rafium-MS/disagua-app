@@ -1,23 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.jsx'
-import './styles/tailwind.css'
-import './styles/tokens.css'
-import './styles/base.css'
-import './styles/layout.css'
-import { loadFromIndexedDBToLocalStorage, syncLocalStorageToIndexedDB } from './utils/indexeddbSync.js'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import './styles/tailwind.css';
+import './styles/tokens.css';
+import './styles/base.css';
+import './styles/layout.css';
+import { AuthProvider } from './context/AuthContext.jsx';
 
-async function bootstrap(){
-  await loadFromIndexedDBToLocalStorage()
-  await syncLocalStorageToIndexedDB()
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-      <BrowserRouter>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
         <App />
-      </BrowserRouter>
-    </React.StrictMode>,
-  )
-}
-
-bootstrap()
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
+);
