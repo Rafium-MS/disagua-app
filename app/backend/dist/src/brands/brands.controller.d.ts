@@ -5,14 +5,14 @@ export declare class BrandsController {
     constructor(service: BrandsService);
     list(req: any): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         codDisagua: string | null;
     }[]>;
     create(req: any, dto: CreateBrandDto): import(".prisma/client").Prisma.Prisma__BrandClient<{
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         codDisagua: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

@@ -6,25 +6,25 @@ export declare class PartnerStoresController {
         partner: {
             id: string;
             orgId: string;
-            email: string | null;
             parceiro: string;
             distribuidora: string | null;
             cnpjCpf: string | null;
             telefone: string | null;
+            email: string | null;
             cidade: string;
             estado: string;
         };
         store: {
             brand: {
                 id: string;
-                name: string;
                 orgId: string;
+                name: string;
                 codDisagua: string | null;
             };
         } & {
             id: string;
-            name: string;
             orgId: string;
+            name: string;
             brandId: string;
             valor20l: import("@prisma/client/runtime/library").Decimal;
             valor10l: import("@prisma/client/runtime/library").Decimal;

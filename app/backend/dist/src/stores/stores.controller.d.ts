@@ -6,14 +6,14 @@ export declare class StoresController {
     list(req: any, query: any): import(".prisma/client").Prisma.PrismaPromise<({
         brand: {
             id: string;
-            name: string;
             orgId: string;
+            name: string;
             codDisagua: string | null;
         };
     } & {
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         brandId: string;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;
@@ -27,8 +27,8 @@ export declare class StoresController {
     })[]>;
     create(req: any, dto: CreateStoreDto): import(".prisma/client").Prisma.Prisma__StoreClient<{
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         brandId: string;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;
