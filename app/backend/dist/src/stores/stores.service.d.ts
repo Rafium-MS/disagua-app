@@ -5,14 +5,14 @@ export declare class StoresService {
     list(orgId: string, query: any): import(".prisma/client").Prisma.PrismaPromise<({
         brand: {
             id: string;
-            orgId: string;
             name: string;
+            orgId: string;
             codDisagua: string | null;
         };
     } & {
         id: string;
-        orgId: string;
         name: string;
+        orgId: string;
         brandId: string;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;
@@ -26,8 +26,8 @@ export declare class StoresService {
     })[]>;
     create(orgId: string, data: any): import(".prisma/client").Prisma.Prisma__StoreClient<{
         id: string;
-        orgId: string;
         name: string;
+        orgId: string;
         brandId: string;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;

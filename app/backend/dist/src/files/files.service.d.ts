@@ -3,8 +3,10 @@ export declare class FilesService {
     private config;
     private s3;
     private bucket;
+    private readonly publicBase;
     constructor(config: ConfigService);
     safe(s?: string): string;
+    private segment;
     buildObjectKey(orgId: string, y: string, m: string, uf?: string, municipio?: string, partnerId?: string, storeId?: string, filename?: string): string;
     presignPut(params: {
         orgId: string;

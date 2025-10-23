@@ -17,14 +17,14 @@ export declare class ReportsController {
         entries: ({
             brand: {
                 id: string;
-                orgId: string;
                 name: string;
+                orgId: string;
                 codDisagua: string | null;
             };
             store: {
                 id: string;
-                orgId: string;
                 name: string;
+                orgId: string;
                 brandId: string;
                 valor20l: import("@prisma/client/runtime/library").Decimal;
                 valor10l: import("@prisma/client/runtime/library").Decimal;
