@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "electron": "cross-env BROWSER=none concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\""
+    "electron": "cross-env BROWSER=none concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "test": "node --test"
   },
   "dependencies": {
     "react": "^18.3.1",
