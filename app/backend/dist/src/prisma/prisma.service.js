@@ -17,7 +17,13 @@ let PrismaService = PrismaService_1 = class PrismaService extends client_1.Prism
         this.maxRetries = (() => {
             var _a;
             const raw = Number((_a = process.env.PRISMA_CONNECTION_RETRIES) !== null && _a !== void 0 ? _a : 5);
-            return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 5;
+            if (!Number.isFinite(raw)) {
+                return 5;
+            }
+            if (raw <= 0) {
+                return null;
+            }
+            return Math.floor(raw);
         })();
         this.retryDelayMs = (() => {
             var _a;
@@ -29,16 +35,18 @@ let PrismaService = PrismaService_1 = class PrismaService extends client_1.Prism
         await this.tryConnectWithRetry();
     }
     async tryConnectWithRetry(attempt = 1) {
+        var _a;
         try {
             await this.$connect();
         }
         catch (error) {
-            if (attempt >= this.maxRetries) {
+            const reachedMaxRetries = this.maxRetries !== null && attempt >= this.maxRetries;
+            if (reachedMaxRetries) {
                 this.logger.error(`Failed to connect to the database after ${attempt} attempt(s).`, error instanceof Error ? error.stack : String(error));
                 throw error;
             }
             const reason = error instanceof Error ? error.message : String(error);
-            this.logger.warn(`Database connection failed (attempt ${attempt}/${this.maxRetries}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`);
+            this.logger.warn(`Database connection failed (attempt ${attempt}/${(_a = this.maxRetries) !== null && _a !== void 0 ? _a : '∞'}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`);
             await new Promise((resolve) => setTimeout(resolve, this.retryDelayMs));
             await this.tryConnectWithRetry(attempt + 1);
         }
