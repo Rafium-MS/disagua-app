@@ -26,7 +26,7 @@ export default function Navbar(){
     <nav className="sticky top-0 z-30 bg-slate-900 text-white">
       <div className="mx-auto max-w-7xl px-4 py-3 flex flex-wrap gap-3 items-center justify-between">
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="font-semibold tracking-wide mr-4">Disagua</span>
+          <span className="font-semibold tracking-wide mr-4">Diságua</span>
           <NavItem to="/">Início</NavItem>
           <NavItem to="/parceiros">Parceiros</NavItem>
           <NavItem to="/lojas">Lojas</NavItem>
