@@ -102,6 +102,7 @@ model PartnerStore {
   partner     Partner  @relation(fields: [partnerId], references: [id], onDelete: Cascade)
   store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
+  @@unique([orgId, id])
   @@unique([orgId, storeId])
   @@unique([orgId, partnerId, storeId])
 }
