@@ -5,38 +5,38 @@ export declare class StoresService {
     list(orgId: string, query: any): import(".prisma/client").Prisma.PrismaPromise<({
         brand: {
             id: string;
-            name: string;
             orgId: string;
+            name: string;
             codDisagua: string | null;
         };
     } & {
         id: string;
-        name: string;
         orgId: string;
-        uf: string;
-        municipio: string;
+        name: string;
         brandId: string;
-        localEntrega: string | null;
-        endereco: string | null;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;
         valor1500ml: import("@prisma/client/runtime/library").Decimal;
         valorCxCopo: import("@prisma/client/runtime/library").Decimal;
         valorVasilhame: import("@prisma/client/runtime/library").Decimal;
+        uf: string;
+        localEntrega: string | null;
+        endereco: string | null;
+        municipio: string;
     })[]>;
     create(orgId: string, data: any): import(".prisma/client").Prisma.Prisma__StoreClient<{
         id: string;
-        name: string;
         orgId: string;
-        uf: string;
-        municipio: string;
+        name: string;
         brandId: string;
-        localEntrega: string | null;
-        endereco: string | null;
         valor20l: import("@prisma/client/runtime/library").Decimal;
         valor10l: import("@prisma/client/runtime/library").Decimal;
         valor1500ml: import("@prisma/client/runtime/library").Decimal;
         valorCxCopo: import("@prisma/client/runtime/library").Decimal;
         valorVasilhame: import("@prisma/client/runtime/library").Decimal;
+        uf: string;
+        localEntrega: string | null;
+        endereco: string | null;
+        municipio: string;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

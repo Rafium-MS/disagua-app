@@ -14,24 +14,24 @@ export declare class ReportsService {
         entries: ({
             brand: {
                 id: string;
-                name: string;
                 orgId: string;
+                name: string;
                 codDisagua: string | null;
             };
             store: {
                 id: string;
-                name: string;
                 orgId: string;
-                uf: string;
-                municipio: string;
+                name: string;
                 brandId: string;
-                localEntrega: string | null;
-                endereco: string | null;
                 valor20l: import("@prisma/client/runtime/library").Decimal;
                 valor10l: import("@prisma/client/runtime/library").Decimal;
                 valor1500ml: import("@prisma/client/runtime/library").Decimal;
                 valorCxCopo: import("@prisma/client/runtime/library").Decimal;
                 valorVasilhame: import("@prisma/client/runtime/library").Decimal;
+                uf: string;
+                localEntrega: string | null;
+                endereco: string | null;
+                municipio: string;
             };
             period: {
                 id: string;
@@ -42,15 +42,15 @@ export declare class ReportsService {
         } & {
             id: string;
             orgId: string;
-            data: Date;
+            storeId: string;
             brandId: string;
+            periodId: string;
+            data: Date;
             valor20l: import("@prisma/client/runtime/library").Decimal;
             valor10l: import("@prisma/client/runtime/library").Decimal;
             valor1500ml: import("@prisma/client/runtime/library").Decimal;
             valorCxCopo: import("@prisma/client/runtime/library").Decimal;
             valorVasilhame: import("@prisma/client/runtime/library").Decimal;
-            storeId: string;
-            periodId: string;
             total: import("@prisma/client/runtime/library").Decimal;
         })[];
     }>;

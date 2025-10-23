@@ -5,10 +5,11 @@ export declare class ReceiptsService {
     create(orgId: string, data: any): import(".prisma/client").Prisma.Prisma__ReceiptClient<{
         id: string;
         orgId: string;
-        brandId: string | null;
         partnerId: string | null;
         storeId: string | null;
+        brandId: string | null;
         periodId: string | null;
+        uploadedById: string | null;
         uploadedAt: Date;
         objectKey: string;
         filename: string;
@@ -18,15 +19,15 @@ export declare class ReceiptsService {
         dataComprovante: Date | null;
         assinaturaOk: boolean | null;
         status: import(".prisma/client").$Enums.ReceiptStatus;
-        uploadedById: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     list(orgId: string, query: any): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
         orgId: string;
-        brandId: string | null;
         partnerId: string | null;
         storeId: string | null;
+        brandId: string | null;
         periodId: string | null;
+        uploadedById: string | null;
         uploadedAt: Date;
         objectKey: string;
         filename: string;
@@ -36,15 +37,15 @@ export declare class ReceiptsService {
         dataComprovante: Date | null;
         assinaturaOk: boolean | null;
         status: import(".prisma/client").$Enums.ReceiptStatus;
-        uploadedById: string | null;
     }[]>;
     update(orgId: string, id: string, data: any): import(".prisma/client").Prisma.Prisma__ReceiptClient<{
         id: string;
         orgId: string;
-        brandId: string | null;
         partnerId: string | null;
         storeId: string | null;
+        brandId: string | null;
         periodId: string | null;
+        uploadedById: string | null;
         uploadedAt: Date;
         objectKey: string;
         filename: string;
@@ -54,6 +55,5 @@ export declare class ReceiptsService {
         dataComprovante: Date | null;
         assinaturaOk: boolean | null;
         status: import(".prisma/client").$Enums.ReceiptStatus;
-        uploadedById: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }
