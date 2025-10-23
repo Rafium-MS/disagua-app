@@ -21,6 +21,11 @@
    npm run start:dev
    ```
 
+### Variáveis de ambiente úteis
+- `PRISMA_CONNECTION_RETRIES` → número de tentativas antes de abortar. Use `0` para tentar indefinidamente enquanto o banco não está
+  disponível (útil durante o desenvolvimento quando o Postgres demora a subir).
+- `PRISMA_RETRY_DELAY_MS` → intervalo em milissegundos entre as tentativas de conexão do Prisma.
+
 ### Login inicial
 - **orgId**: `00000000-0000-0000-0000-000000000001`
 - **email**: `admin@disagua.local`
