@@ -31,25 +31,27 @@ let PrismaService = PrismaService_1 = class PrismaService extends client_1.Prism
             return Number.isFinite(raw) && raw >= 0 ? Math.floor(raw) : 2000;
         })();
     }
-    async onModuleInit() {
-        await this.tryConnectWithRetry();
+    onModuleInit() {
+        this.tryConnectWithRetry();
     }
-    async tryConnectWithRetry(attempt = 1) {
-        var _a;
-        try {
-            await this.$connect();
-        }
-        catch (error) {
+    tryConnectWithRetry(attempt = 1) {
+        this.$connect()
+            .then(() => {
+            this.logger.log('Database connection established.');
+        })
+            .catch((error) => {
+            var _a;
             const reachedMaxRetries = this.maxRetries !== null && attempt >= this.maxRetries;
-            if (reachedMaxRetries) {
-                this.logger.error(`Failed to connect to the database after ${attempt} attempt(s).`, error instanceof Error ? error.stack : String(error));
-                throw error;
-            }
             const reason = error instanceof Error ? error.message : String(error);
-            this.logger.warn(`Database connection failed (attempt ${attempt}/${(_a = this.maxRetries) !== null && _a !== void 0 ? _a : '∞'}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`);
-            await new Promise((resolve) => setTimeout(resolve, this.retryDelayMs));
-            await this.tryConnectWithRetry(attempt + 1);
-        }
+            if (reachedMaxRetries) {
+                this.logger.error(`Failed to connect to the database after ${attempt} attempt(s). Keeping the API running and retrying in ${this.retryDelayMs}ms. Reason: ${reason}`, error instanceof Error ? error.stack : String(error));
+            }
+            else {
+                this.logger.warn(`Database connection failed (attempt ${attempt}/${(_a = this.maxRetries) !== null && _a !== void 0 ? _a : '∞'}). Retrying in ${this.retryDelayMs}ms... Reason: ${reason}`);
+            }
+            const nextAttempt = reachedMaxRetries && this.maxRetries !== null ? 1 : attempt + 1;
+            setTimeout(() => this.tryConnectWithRetry(nextAttempt), this.retryDelayMs);
+        });
     }
     async enableShutdownHooks(app) {
         process.on('beforeExit', async () => {

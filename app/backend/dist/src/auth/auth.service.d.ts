@@ -15,8 +15,8 @@ export declare class AuthService {
         isActive: boolean;
     }>;
     login(orgId: string, email: string, password: string): Promise<{
-        access: string;
-        refresh: string;
+        access: any;
+        refresh: any;
         user: {
             id: string;
             email: string;

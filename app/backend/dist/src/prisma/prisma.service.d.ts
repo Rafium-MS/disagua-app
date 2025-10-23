@@ -4,7 +4,7 @@ export declare class PrismaService extends PrismaClient implements OnModuleInit 
     private readonly logger;
     private readonly maxRetries;
     private readonly retryDelayMs;
-    onModuleInit(): Promise<void>;
+    onModuleInit(): void;
     private tryConnectWithRetry;
     enableShutdownHooks(app: INestApplication): Promise<void>;
 }

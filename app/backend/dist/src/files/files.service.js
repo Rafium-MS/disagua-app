@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FilesService = void 0;
 const common_1 = require("@nestjs/common");
@@ -25,25 +26,42 @@ let FilesService = class FilesService {
             credentials: { accessKeyId: this.config.get('S3_ACCESS_KEY') || '', secretAccessKey: this.config.get('S3_SECRET_KEY') || '' }
         });
         this.bucket = this.config.get('S3_BUCKET') || 'disagua';
+        const publicBase = this.config.get('S3_PUBLIC_URL') || this.config.get('S3_ENDPOINT') || '';
+        this.publicBase = publicBase.replace(/\/$/, '');
     }
-    safe(s) { return (s || '').normalize('NFKD').replace(/[^\w.-]+/g, '-'); }
+    safe(s) {
+        return (s || '').normalize('NFKD').replace(/[^\w.-]+/g, '-');
+    }
+    segment(value, fallback) {
+        const cleaned = this.safe(value || '');
+        return cleaned || fallback;
+    }
     buildObjectKey(orgId, y, m, uf, municipio, partnerId, storeId, filename) {
         const ym = `${y}-${m.padStart(2, '0')}`;
         const ts = new Date().toISOString().replace(/[:.]/g, '').replace('T', '_').slice(0, 15);
-        const name = filename ? this.safe(filename) : `${(0, uuid_1.v4)()}`;
-        const parts = [orgId, ym, this.safe(uf), this.safe(municipio), partnerId || 'partner', storeId || 'store', `${ts}-${name}`].filter(Boolean);
+        const name = this.safe(filename) || `${(0, uuid_1.v4)()}`;
+        const parts = [
+            this.segment(orgId, 'org'),
+            ym,
+            this.segment(uf, 'sem-uf'),
+            this.segment(municipio, 'sem-municipio'),
+            this.segment(partnerId, 'partner'),
+            this.segment(storeId, 'store'),
+            `${ts}-${name}`,
+        ];
         return parts.join('/');
     }
     async presignPut(params) {
         var _a;
         const url = await this.s3.getSignedUrlPromise('putObject', { Bucket: this.bucket, Key: params.key, ContentType: params.contentType, Expires: (_a = params.expires) !== null && _a !== void 0 ? _a : 900 });
-        const publicUrl = `${this.config.get('S3_ENDPOINT')}/${this.bucket}/${params.key}`;
+        const base = this.publicBase;
+        const publicUrl = base ? `${base}/${this.bucket}/${params.key}` : `${this.bucket}/${params.key}`;
         return { url, key: params.key, publicUrl };
     }
 };
 exports.FilesService = FilesService;
 exports.FilesService = FilesService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService])
+    __metadata("design:paramtypes", [typeof (_a = typeof config_1.ConfigService !== "undefined" && config_1.ConfigService) === "function" ? _a : Object])
 ], FilesService);
 //# sourceMappingURL=files.service.js.map

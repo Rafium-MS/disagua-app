@@ -33,7 +33,9 @@ let PartnerStoresService = class PartnerStoresService {
             include: { partner: true, store: { include: { brand: true } } }
         });
     }
-    disconnect(orgId, id) { return this.prisma.partnerStore.delete({ where: { id } }); }
+    disconnect(orgId, id) {
+        return this.prisma.partnerStore.delete({ where: { orgId_id: { orgId, id } } });
+    }
 };
 exports.PartnerStoresService = PartnerStoresService;
 exports.PartnerStoresService = PartnerStoresService = __decorate([
