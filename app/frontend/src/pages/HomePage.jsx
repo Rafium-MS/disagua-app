@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function HomePage(){
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <Card title="Bem-vindo à Disagua">
+      <Card title="Bem-vindo à Diságua">
         <p className="text-slate-700">
           Portal operacional conectado ao backend NestJS. Cadastre marcas, lojas e parceiros para
           alimentar relatórios e a conciliação de comprovantes.
