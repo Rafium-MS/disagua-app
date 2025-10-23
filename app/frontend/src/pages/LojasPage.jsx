@@ -24,19 +24,25 @@ export default function LojasPage(){
   return (<div className="grid gap-4">
     <Card title="Cadastro de Marcas">
       <form onSubmit={addBrand} className="grid md:grid-cols-3 gap-3">
-        <Input label="Nome da marca" value={brandForm.marca} onChange={e=>setBrandForm({...brandForm, marca:e.target.value})} required />
-        <Input label="Cód. Disagua" value={brandForm.cod_disagua} onChange={e=>setBrandForm({...brandForm, cod_disagua:e.target.value})} />
+        <Input label="Nome da Marca" value={brandForm.marca} onChange={e=>setBrandForm({...brandForm, marca:e.target.value})} required />
+        <Input label="Cód. Matriz" value={brandForm.cod_disagua}onChange={e=>setBrandForm({...brandForm, cod_disagua:e.target.value})} />        
         <div className="flex items-end"><Button type="submit">Cadastrar Marca</Button></div>
       </form>
     </Card>
     <Card title="Cadastro de Lojas">
       <form onSubmit={addStore} className="grid gap-3">
         <div className="grid md:grid-cols-3 gap-3">
-          <Select label="Marca" value={storeForm.marca_id} onChange={e=>setStoreForm({...storeForm,marca_id:e.target.value})} required>
-            <option value="">Selecione</option>{brands.map(b=> <option key={b.id} value={b.id}>{b.marca}</option>)}
+          <Select label="Marca" value={storeForm.marca_id}
+                  onChange={e=>setStoreForm({...storeForm, marca_id:e.target.value})}>
+            <option value="">Selecione</option>
+            {brands.map(b => <option key={b.id} value={b.id}>{b.marca}</option>)}
           </Select>
-          <Input label="Nome da loja" value={storeForm.loja} onChange={e=>setStoreForm({...storeForm,loja:e.target.value})} required />
-          <Input label="Cód. Disagua" value={storeForm.cod_disagua} onChange={e=>setStoreForm({...storeForm,cod_disagua:e.target.value})} />
+
+          <Input label="Cód. Disagua" value={storeForm.cod_disagua}
+                onChange={e=>setStoreForm({...storeForm, cod_disagua:e.target.value})} />
+
+          <Input label="Nome da loja" value={storeForm.loja}
+                onChange={e=>setStoreForm({...storeForm, loja:e.target.value})} required />
         </div>
         <div className="grid md:grid-cols-5 gap-3">
           <Input label="Local da entrega" value={storeForm.local_entrega} onChange={e=>setStoreForm({...storeForm,local_entrega:e.target.value})} required />
