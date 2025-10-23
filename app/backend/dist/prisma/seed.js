@@ -13,7 +13,7 @@ async function main() {
     await prisma.user.upsert({
         where: { email_orgId: { email: 'admin@disagua.local', orgId: org.id } },
         update: {},
-        create: { email: 'admin@disagua.local', orgId: org.id, passwordHash: hash, role: client_1.Role.admin }
+        create: { email: 'admin@disagua.local', orgId: org.id, passwordHash: hash, role: Role.admin }
     });
     console.log('Seed ok');
 }
