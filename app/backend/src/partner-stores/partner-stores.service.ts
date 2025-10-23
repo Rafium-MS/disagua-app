@@ -18,5 +18,7 @@ export class PartnerStoresService {
       include: { partner: true, store: { include: { brand: true } } }
     });
   }
-  disconnect(orgId: string, id: string){ return this.prisma.partnerStore.delete({ where: { id } }); }
+  disconnect(orgId: string, id: string){
+    return this.prisma.partnerStore.delete({ where: { orgId_id: { orgId, id } } });
+  }
 }

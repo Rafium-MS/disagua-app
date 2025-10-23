@@ -8,7 +8,7 @@
     "start:dev": "nest start --watch",
     "prestart:dev": "npm run prisma:generate",
     "build": "nest build",
-    "test": "ts-node test/receipts.service.spec.ts",
+    "test": "ts-node test/partner-stores.service.spec.ts && ts-node test/receipts.service.spec.ts",
     "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
