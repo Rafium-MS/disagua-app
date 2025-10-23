@@ -4,8 +4,8 @@ export declare class BrandsService {
     constructor(prisma: PrismaService);
     list(orgId: string): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         codDisagua: string | null;
     }[]>;
     create(orgId: string, data: {
@@ -13,8 +13,8 @@ export declare class BrandsService {
         codDisagua?: string;
     }): import(".prisma/client").Prisma.Prisma__BrandClient<{
         id: string;
-        name: string;
         orgId: string;
+        name: string;
         codDisagua: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }
