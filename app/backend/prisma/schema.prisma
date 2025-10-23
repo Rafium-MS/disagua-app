@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Org {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  users     User[]
+  brands    Brand[]
+  stores    Store[]
+  partners  Partner[]
+  periods   ReportPeriod[]
+  receipts  Receipt[]
+  partnerStores PartnerStore[]
+  audits    AuditLog[]
+}
+
+model User {
+  id           String  @id @default(uuid())
+  orgId        String
+  email        String
+  passwordHash String
+  role         Role
+  isActive     Boolean @default(true)
+  org          Org     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, email])
+}
+
+enum Role {
+  admin
+  operador
+  auditor
+}
+
+model Brand {
+  id        String   @id @default(uuid())
+  orgId     String
+  name      String
+  codDisagua String?
+  org       Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  stores    Store[]
+  receipts  Receipt[]
+  reports   ReportEntry[]
+
+  @@unique([orgId, name])
+}
+
+model Store {
+  id        String   @id @default(uuid())
+  orgId     String
+  brandId   String
+  name      String
+  localEntrega String?
+  endereco  String?
+  municipio String
+  uf        String
+  valor20l      Decimal @default(0)
+  valor10l      Decimal @default(0)
+  valor1500ml   Decimal @default(0)
+  valorCxCopo   Decimal @default(0)
+  valorVasilhame Decimal @default(0)
+  org       Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  partnerStore PartnerStore?
+  receipts  Receipt[]
+  reportEntries ReportEntry[]
+
+  @@unique([orgId, brandId, name])
+}
+
+model Partner {
+  id         String   @id @default(uuid())
+  orgId      String
+  parceiro   String
+  distribuidora String?
+  cnpjCpf    String?
+  telefone   String?
+  email      String?
+  cidade     String
+  estado     String
+  org        Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  partnerStores PartnerStore[]
+  receipts   Receipt[]
+}
+
+model PartnerStore {
+  id        String   @id @default(uuid())
+  orgId     String
+  partnerId String
+  storeId   String
+  connectedAt DateTime @default(now())
+  org      Org     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  partner  Partner @relation(fields: [partnerId], references: [id], onDelete: Cascade)
+  store    Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, storeId]) // one partner per store
+  @@unique([orgId, partnerId, storeId])
+}
+
+model ReportPeriod {
+  id    String @id @default(uuid())
+  orgId String
+  y     Int
+  m     Int
+  org   Org    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  entries ReportEntry[]
+
+  @@unique([orgId, y, m])
+}
+
+model ReportEntry {
+  id       String @id @default(uuid())
+  orgId    String
+  periodId String
+  brandId  String
+  storeId  String
+  data     DateTime
+  valor20l      Decimal @default(0)
+  valor10l      Decimal @default(0)
+  valor1500ml   Decimal @default(0)
+  valorCxCopo   Decimal @default(0)
+  valorVasilhame Decimal @default(0)
+  total    Decimal
+  org      Org          @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  period   ReportPeriod @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  brand    Brand        @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  store    Store        @relation(fields: [storeId], references: [id], onDelete: Restrict)
+
+  @@default(map: "report_entry_total_generated") // just a label; compute in service
+}
+
+model Receipt {
+  id            String   @id @default(uuid())
+  orgId         String
+  partnerId     String?
+  storeId       String?
+  brandId       String?
+  periodId      String?
+  uploadedById  String?
+  uploadedAt    DateTime @default(now())
+  objectKey     String
+  filename      String
+  fileExt       String?
+  sizeBytes     Int?
+  quantidade    Decimal?
+  dataComprovante DateTime?
+  assinaturaOk  Boolean? @default(false)
+  status        ReceiptStatus @default(pendente)
+
+  org     Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  partner Partner? @relation(fields: [partnerId], references: [id], onDelete: SetNull)
+  store   Store?   @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  brand   Brand?   @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  period  ReportPeriod? @relation(fields: [periodId], references: [id], onDelete: SetNull)
+  uploadedBy User?  @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+}
+
+enum ReceiptStatus {
+  pendente
+  valido
+  invalido
+}
+
+model AuditLog {
+  id       BigInt  @id @default(autoincrement())
+  orgId    String?
+  userId   String?
+  entity   String
+  entityId String?
+  action   String
+  data     Json?
+  createdAt DateTime @default(now())
+  org      Org?     @relation(fields: [orgId], references: [id], onDelete: SetNull)
+}
