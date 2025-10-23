@@ -16,6 +16,10 @@ let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
-    (0, common_1.Module)({ imports: [prisma_module_1.PrismaModule, jwt_1.JwtModule.register({})], providers: [auth_service_1.AuthService], controllers: [auth_controller_1.AuthController] })
+    (0, common_1.Module)({
+        imports: [prisma_module_1.PrismaModule, jwt_1.JwtModule.register({ global: true })],
+        providers: [auth_service_1.AuthService],
+        controllers: [auth_controller_1.AuthController],
+    })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map
