@@ -3,6 +3,26 @@ import { CreatePartnerDto } from './dto';
 export declare class PartnersController {
     private service;
     constructor(service: PartnersService);
-    list(req: any, query: any): any;
-    create(req: any, dto: CreatePartnerDto): any;
+    list(req: any, query: any): import(".prisma/client").Prisma.PrismaPromise<{
+        id: string;
+        orgId: string;
+        email: string | null;
+        estado: string;
+        cidade: string;
+        parceiro: string;
+        distribuidora: string | null;
+        cnpjCpf: string | null;
+        telefone: string | null;
+    }[]>;
+    create(req: any, dto: CreatePartnerDto): import(".prisma/client").Prisma.Prisma__PartnerClient<{
+        id: string;
+        orgId: string;
+        email: string | null;
+        estado: string;
+        cidade: string;
+        parceiro: string;
+        distribuidora: string | null;
+        cnpjCpf: string | null;
+        telefone: string | null;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

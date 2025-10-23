@@ -6,17 +6,25 @@ export declare class DashboardService {
         period: {
             y: number;
             m: number;
-            periodId: any;
+            periodId: string | null;
         };
-        receiptsByStatus: any;
-        entriesByBrand: any;
+        receiptsByStatus: (import(".prisma/client").Prisma.PickEnumerable<import(".prisma/client").Prisma.ReceiptGroupByOutputType, "status"[]> & {
+            _count: {
+                _all: number;
+            };
+        })[];
+        entriesByBrand: {
+            brandId: string;
+            brand: string;
+            total: string;
+        }[];
         entriesByUF: {
             uf: string;
             total: string;
         }[];
         coverage: {
-            partnersTotal: any;
-            partnersSent: any;
+            partnersTotal: number;
+            partnersSent: number;
             partnersPending: number;
         };
     }>;

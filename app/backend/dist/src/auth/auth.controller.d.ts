@@ -7,10 +7,10 @@ export declare class AuthController {
         access: string;
         refresh: string;
         user: {
-            id: any;
-            email: any;
-            role: any;
-            orgId: any;
+            id: string;
+            email: string;
+            role: import(".prisma/client").$Enums.Role;
+            orgId: string;
         };
     }>;
 }
