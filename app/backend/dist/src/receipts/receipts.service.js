@@ -16,14 +16,30 @@ let ReceiptsService = class ReceiptsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(orgId, data) { return this.prisma.receipt.create({ data: { ...data, orgId } }); }
+    create(orgId, data) {
+        return this.prisma.receipt.create({ data: { ...data, orgId } });
+    }
     list(orgId, query) {
         const { status, period, brand, store, partner } = query;
-        return this.prisma.receipt.findMany({ where: {
-                orgId, status: status || undefined, periodId: period || undefined, brandId: brand || undefined, storeId: store || undefined, partnerId: partner || undefined
-            }, orderBy: { uploadedAt: 'desc' } });
+        return this.prisma.receipt.findMany({
+            where: {
+                orgId,
+                status: status || undefined,
+                periodId: period || undefined,
+                brandId: brand || undefined,
+                storeId: store || undefined,
+                partnerId: partner || undefined,
+            },
+            orderBy: { uploadedAt: 'desc' },
+        });
     }
-    update(orgId, id, data) { return this.prisma.receipt.update({ where: { id }, data }); }
+    async update(orgId, id, data) {
+        const result = await this.prisma.receipt.updateMany({ where: { id, orgId }, data });
+        if (result.count === 0) {
+            throw new common_1.NotFoundException('Receipt not found');
+        }
+        return this.prisma.receipt.findFirstOrThrow({ where: { id, orgId } });
+    }
 };
 exports.ReceiptsService = ReceiptsService;
 exports.ReceiptsService = ReceiptsService = __decorate([
