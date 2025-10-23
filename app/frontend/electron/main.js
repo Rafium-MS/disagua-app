@@ -9,8 +9,15 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-  const devUrl = process.env.VITE_DEV_SERVER_URL || 'http://localhost:5173'
-  win.loadURL(devUrl)
+
+  const devUrl = process.env.VITE_DEV_SERVER_URL
+
+  if (devUrl) {
+    win.loadURL(devUrl)
+  } else {
+    const indexHtml = path.join(__dirname, '..', 'dist', 'index.html')
+    win.loadFile(indexHtml)
+  }
 }
 
 app.whenReady().then(() => {
