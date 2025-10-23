@@ -1,2 +1,10 @@
 import { IsOptional, IsString } from 'class-validator';
-export class CreateBrandDto { @IsString() name: string; @IsOptional() @IsString() codDisagua?: string; }
+
+export class CreateBrandDto {
+  @IsString()
+  name!: string;
+
+  @IsOptional()
+  @IsString()
+  codDisagua?: string;
+}
