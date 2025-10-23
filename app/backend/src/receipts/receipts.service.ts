@@ -10,5 +10,5 @@ export class ReceiptsService {
       orgId, status: status || undefined, periodId: period || undefined, brandId: brand || undefined, storeId: store || undefined, partnerId: partner || undefined
     }, orderBy: { uploadedAt: 'desc' } });
   }
-  update(orgId: string, id:string, data:any){ return self.prisma.receipt.update({ where: { id }, data }); }
+  update(orgId: string, id:string, data:any){ return this.prisma.receipt.update({ where: { id }, data }); }
 }
