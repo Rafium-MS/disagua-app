@@ -66,7 +66,7 @@ export class DashboardService {
 
     const ufAgg: Record<string, number> = {};
     entriesByStore.forEach((entry) => {
-      const uf = entry.store?.uf || 'NA';
+      const uf = entry.store?.uf?.toUpperCase() || 'NA';
       const total = Number(entry.total || 0);
       ufAgg[uf] = (ufAgg[uf] || 0) + total;
     });
