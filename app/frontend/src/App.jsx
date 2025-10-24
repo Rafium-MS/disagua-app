@@ -10,6 +10,8 @@ import RelatoriosPage from './pages/RelatoriosPage.jsx';
 import GerenciarLojasPage from './pages/GerenciarLojasPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import Toaster from './components/feedback/Toaster';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function ProtectedLayout(){
   const { isAuthenticated } = useAuth();
@@ -25,6 +27,9 @@ function ProtectedLayout(){
 
 export default function App(){
   return (
+        <ErrorBoundary>
+
+    <Toaster />
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedLayout />}>
@@ -38,5 +43,8 @@ export default function App(){
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+        </ErrorBoundary>
+
+    </>
   );
 }

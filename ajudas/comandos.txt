@@ -1,0 +1,15 @@
+# Terminal 1 - Backend
+cd app/backend
+npm run start:dev
+
+# Terminal 2 - Frontend (Electron)
+cd app/frontend
+npm run electron:dev
+
+cd app/frontend
+npm run electron:build:win  # Windows
+npm run electron:build:mac  # macOS
+npm run electron:build:linux # Linux
+
+cd app/frontend
+npm install -D typescript @types/react @types/react-dom

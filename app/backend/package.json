@@ -32,7 +32,17 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+        // Adicionar para rate limiting
+    "@nestjs/throttler": "^6.2.1",
+    
+    // Adicionar para logging estruturado
+    "nest-winston": "^1.10.0",
+    "winston": "^3.17.0",
+    
+    // Adicionar para validação avançada
+    "class-validator": "^0.14.1",
+    "class-transformer": "^0.5.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.10",
