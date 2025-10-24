@@ -1,4 +1,5 @@
-import { afterEach, beforeEach, describe, it, expect } from 'vitest'
+import { afterEach, beforeEach, describe, it } from 'node:test'
+import assert from 'node:assert/strict'
 import { exportToPDF, exportToXLSX } from '../exporters.js'
 
 const originalDocument = global.document
@@ -56,15 +57,15 @@ describe('exporters', () => {
 
     await exportToXLSX(rows, 'dados.xlsx')
 
-    expect(anchorElement.download).toBe('dados.csv')
-    expect(capturedBlob).toBeInstanceOf(Blob)
+    assert.equal(anchorElement.download, 'dados.csv')
+    assert.ok(capturedBlob instanceof Blob)
 
     const csvText = await capturedBlob.text()
     const csvWithoutBom = csvText.replace(/^\ufeff/, '')
     const [headersLine, dataLine] = csvWithoutBom.split('\r\n')
 
-    expect(headersLine).toBe('Nome;Observacao')
-    expect(dataLine).toBe('Alice;"Valor; ""especial"""')
+    assert.equal(headersLine, 'Nome;Observacao')
+    assert.equal(dataLine, 'Alice;"Valor; ""especial"""')
   })
 
   it('exportToPDF mantém extensão informada e escapa caracteres especiais', async () => {
@@ -74,12 +75,12 @@ describe('exporters', () => {
 
     await exportToPDF(rows, 'relatorio.pdf')
 
-    expect(anchorElement.download).toBe('relatorio.pdf')
-    expect(capturedBlob).toBeInstanceOf(Blob)
+    assert.equal(anchorElement.download, 'relatorio.pdf')
+    assert.ok(capturedBlob instanceof Blob)
 
     const pdfContent = await capturedBlob.text()
-    expect(pdfContent).toContain('Valor \\(')
-    expect(pdfContent).toContain('especial\\)')
-    expect(pdfContent).toContain('\\\\ teste')
+    assert.ok(pdfContent.includes('Valor \\('))
+    assert.ok(pdfContent.includes('especial\\)'))
+    assert.ok(pdfContent.includes('\\\\ teste'))
   })
 })
