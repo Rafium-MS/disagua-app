@@ -1,6 +1,6 @@
 import React from 'react';
 import Joyride, { STATUS } from 'react-joyride';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const steps = [
   {
