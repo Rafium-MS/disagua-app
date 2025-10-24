@@ -71,8 +71,8 @@ let DashboardService = class DashboardService {
         });
         const ufAgg = {};
         entriesByStore.forEach((entry) => {
-            var _a;
-            const uf = ((_a = entry.store) === null || _a === void 0 ? void 0 : _a.uf) || 'NA';
+            var _a, _b;
+            const uf = ((_b = (_a = entry.store) === null || _a === void 0 ? void 0 : _a.uf) === null || _b === void 0 ? void 0 : _b.toUpperCase()) || 'NA';
             const total = Number(entry.total || 0);
             ufAgg[uf] = (ufAgg[uf] || 0) + total;
         });
